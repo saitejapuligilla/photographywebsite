@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Upload Gallery</title>
+  
+</head>
+<body>
+  <header>
+    <h1>Image Upload Gallery</h1>
+  </header>
+
+  <main>
+    <section class="upload-section">
+      <h2>Upload Your Image</h2>
+      <form>
+        <div class="form-group">
+          <label for="image-input">Select Image:</label>
+          <input type="file" id="image-input" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label for="description-input">Description:</label>
+          <textarea id="description-input" placeholder="Enter your image description"></textarea>
+        </div>
+        <button type="submit" id="upload-btn" class="btn">Upload</button>
+      </form>
+    </section>
+
+    <section class="gallery-section">
+      <h2>Gallery</h2>
+      <div class="gallery-container">
+        
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Image Upload Gallery</p>
+  </footer>
+  <style>
+    /* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-section,
+.gallery-section {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #555;
+}
+
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 1rem;
+}
+
+.gallery-item {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.gallery-item img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+  </style>
+  <script>
+    const imageInput = document.getElementById('image-input');
+const descriptionInput = document.getElementById('description-input');
+const uploadBtn = document.getElementById('upload-btn');
+const galleryContainer = document.querySelector('.gallery-container');
+
+uploadBtn.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  const imageFile = imageInput.files[0];
+
+  if (imageFile) {
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      const image = document.createElement('img');
+      image.src = reader.result;
+
+      const galleryItem = document.createElement('div');
+      galleryItem.classList.add('gallery-item');
+
+      galleryItem.appendChild(image);
+      galleryItem.appendChild(document.createTextNode(descriptionInput.value));
+
+      galleryContainer.appendChild(galleryItem);
+
+      imageInput.value = '';
+      descriptionInput.value = '';
+    };
+
+    reader.readAsDataURL(imageFile);
+  }
+});
+  </script>
+</body>
+</html>
